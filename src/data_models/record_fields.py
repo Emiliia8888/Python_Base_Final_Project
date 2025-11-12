@@ -1,6 +1,8 @@
+import re
 from datetime import datetime
 
 MAX_LEN_PHONE_NUMBER = 10
+email_regex = r'^[\w\.-]+@[\w\.-]+\.\w+$'
 
 class Field:
     def __init__(self, value):
@@ -33,8 +35,8 @@ class Email(Field):
         super().__init__(email)
 
     def is_email_valid(self, email: str):
-        if len(email) < 5 or not "@" in email:
-            raise Exception("Invalid email - email should contain @ character")
+        if re.match(email_regex, email) is None:
+            raise Exception("Invalid email address")
 
     def update(self, email):
         self.is_email_valid(email)
