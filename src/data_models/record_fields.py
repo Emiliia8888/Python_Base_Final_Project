@@ -1,6 +1,8 @@
+import re
 from datetime import datetime
 
 MAX_LEN_PHONE_NUMBER = 10
+email_regex = r'^[\w\.-]+@[\w\.-]+\.\w+$'
 
 class Field:
     def __init__(self, value):
@@ -27,6 +29,20 @@ class Phone(Field):
     def __eq__(self, value):
         return self.value == value
 
+class Email(Field):
+    def __init__(self, email:str):
+        self.is_email_valid(email)
+        super().__init__(email)
+
+    def is_email_valid(self, email: str):
+        if re.match(email_regex, email) is None:
+            raise Exception("Invalid email address")
+
+    def update(self, email):
+        self.is_email_valid(email)
+        self.value = email
+
+
 class Birthday(Field):
     def __init__(self, value):
         try:
@@ -48,3 +64,10 @@ class Birthday(Field):
     
     def __str__(self):
         return self.value.strftime("%d.%m.%Y")
+
+    def age(self):
+        today = datetime.today()
+        age = today.year - self.value.year
+        if (today.month, today.day) < (self.value.month, self.value.day):
+            age -= 1
+        return age

@@ -27,6 +27,10 @@ def main():
                     print(command_processor.update_contact(args, book))
                 case CommandEnum.SHOW_PHONE.value:
                     print(command_processor.show_phones(args, book))
+                case CommandEnum.ADD_EMAIL.value:
+                    print(command_processor.add_email(args, book))
+                case CommandEnum.SHOW_EMAIL.value:
+                    print(command_processor.show_emails(args, book))
                 case CommandEnum.SHOW_ALL.value:
                     print(command_processor.show_all(book))
                 case CommandEnum.ADD_BIRTHDAY.value:

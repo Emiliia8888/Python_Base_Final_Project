@@ -20,7 +20,7 @@ class AddressBook(UserDict):
         else:
             raise ValueError (f"Record for {name} not found in address book.")
     
-    def find(self, name):
+    def find(self, name) -> Record:
         return self.data.get(name, None)
         
     def __str__(self):

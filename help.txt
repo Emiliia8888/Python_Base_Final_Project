@@ -2,6 +2,8 @@ List of available commands:
 add - adds contact, example of input: add [contact name] [phone]
 change - changes existing contact, example of input: change [contact name] [phone]
 phone - returns phone number by name, example of input: phone [contact name]
+add-email - add email to existing contact, example of input: add-email [contact name] [email]
+email - returns email by name, example of input: email [contact name]
 all - shows all added contacts, example of input: all
 hello - says hello, example of input: hello
 add-birthday - adds birthday date to the selected contact in format DD.MM.YYYY, example of input: add-birthday [contact name] [birthday]

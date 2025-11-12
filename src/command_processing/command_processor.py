@@ -47,6 +47,27 @@ def show_phones(args, book: AddressBook):
         phone_numbers = ', '.join(str(phone) for phone in book_record.phones)
     return phone_numbers
 
+
+@input_error
+def add_email(args, book: AddressBook):
+    name, email, *_ = args
+    book_record = book.find(name)
+    if book_record is None:
+        raise KeyError("Contact not found in the book.")
+    else:
+        book_record.add_email(email)
+        return "Email added"
+
+@input_error
+def show_emails(args, book: AddressBook):
+    name = args[0]
+    book_record = book.find(name)
+    if book_record is None:
+        raise KeyError("Contact not found in the book.")
+    else:
+        emails = ', '.join(str(email) for email in book_record.emails)
+    return emails
+
 @input_error
 def show_all(book: AddressBook):
     return str(book);

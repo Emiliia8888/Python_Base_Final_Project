@@ -1,11 +1,14 @@
-from src.data_models.record_fields import Name, Phone
+from typing import List
+
+from src.data_models.record_fields import Name, Phone, Email
 from src.data_models.record_fields import Birthday
 
 class Record:
     def __init__(self, name):
         self.name = Name(name)
-        self.phones = []
-        self.birthday = None
+        self.phones: List[Phone] = []
+        self.emails: List[Email] = []
+        self.birthday: Birthday|None = None
 
     def add_phone(self, phone_number):
         if Phone(phone_number) not in self.phones:
@@ -38,9 +41,16 @@ class Record:
         raise ValueError(f"Phone {phone_number} not found for {self.name}")
 
     def __str__(self):
-        phones_str = '; '.join(str(phone) for phone in self.phones)
-        return f"Contact name: {self.name}, phones: {phones_str}, birthday: {self.birthday if self.birthday else 'N/A'}"
-    
+        age = f"(age: {self.birthday.age()})" if self.birthday else ""
+        return (f"{self.name}:"
+                f"\n\tphones: {'; '.join(p.value for p in self.phones)}"
+                f"\n\temails: {'; '.join(e.value for e in self.emails)}"
+                f"\n\tbirthday: {self.birthday if self.birthday else 'N/A'}\t{age}")
+
     def add_birthday(self, birthday_str):
         self.birthday = Birthday(birthday_str)
         return f"Birthday {birthday_str} added to {self.name}"
+
+
+    def add_email(self, email):
+        self.emails.append(Email(email))
