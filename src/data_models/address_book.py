@@ -47,17 +47,10 @@ class AddressBook(UserDict):
                     next_birthday_date = datetime(year=todays_date.year + 1,
                                                   month=record.birthday.value.month,
                                                   day=record.birthday.value.day).date()
-                
-                birthday_weekday = next_birthday_date.weekday()
-                if birthday_weekday >= 5:
-                    days_until_monday = 7 - birthday_weekday
-                    congratulation_date = next_birthday_date + timedelta(days=days_until_monday)
-                else:
-                    congratulation_date = next_birthday_date
-        
-                difference = congratulation_date - todays_date
+
+                difference = next_birthday_date - todays_date
                 if difference.days <= days:
-                    user_congrats = {"name": record.name.value, "congratulation_date": congratulation_date.strftime("%d.%m.%Y")}
+                    user_congrats = {"name": record.name.value, "congratulation_date": next_birthday_date.strftime("%d.%m.%Y")}
                     upcoming_birthdays.append(user_congrats)
         
         return upcoming_birthdays
