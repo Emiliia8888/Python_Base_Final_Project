@@ -51,6 +51,7 @@ class Record:
         self.birthday = Birthday(birthday_str)
         return f"Birthday {birthday_str} added to {self.name}"
 
-
-    def add_email(self, email):
+    def add_email(self, email: Email):
+        if email in self.emails:
+            raise ValueError(f"Email {email} already exists for {self.name}")
         self.emails.append(Email(email))

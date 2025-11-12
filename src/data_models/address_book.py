@@ -1,6 +1,7 @@
 from collections import UserDict
 from src.data_models.address_book_record import Record
 from datetime import datetime, timedelta
+from src.data_models.record_fields import Email
 
 class AddressBook(UserDict):
     def __init__(self):
@@ -13,7 +14,7 @@ class AddressBook(UserDict):
         self.data[record.name.value] = record
         return f"Record for {record.name} added to address book."
     
-    def delete(self, name):
+    def delete_record(self, name):
         if name in self.data:
             del self.data[name]
             return f"Record for {name} deleted from address book."
@@ -60,3 +61,9 @@ class AddressBook(UserDict):
                     upcoming_birthdays.append(user_congrats)
         
         return upcoming_birthdays
+
+    def find_by_name(self, name):
+        return self.data.get(name, None)
+
+    def find_by_email(self, email: Email) -> list[Record]:
+       return [record for record in self.data.values() if email in record.emails]

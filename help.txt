@@ -1,6 +1,9 @@
 List of available commands:
 add - adds contact, example of input: add [contact name] [phone]
 change - changes existing contact, example of input: change [contact name] [phone]
+remove - removes contact from the book, example of input: remove [contact name]
+find-by-email - finds and show all information about the contact by email, example of input: find-by-email [email]
+find-by-name - finds and show all information about the contact by name, example of input: find-by-name [contact name]
 phone - returns phone number by name, example of input: phone [contact name]
 add-email - add email to existing contact, example of input: add-email [contact name] [email]
 email - returns email by name, example of input: email [contact name]

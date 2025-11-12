@@ -1,9 +1,14 @@
 from src.error_handling.error_handler import input_error
 from src.data_models.address_book import AddressBook
-from src.data_models.address_book_record import Record
+from src.data_models.address_book_record import Record, Email
 
 COUNT_DAYS_UPCOMING_BIRTHDAYS = 7
 HELP_FILE_PATH = "help.txt"
+
+def is_record_found(record: Record) -> bool:
+    if record is None:
+        raise KeyError("Contact not found in the book.")
+    return True
 
 @input_error
 def show_help_file():
@@ -30,42 +35,34 @@ def update_contact(args, book: AddressBook):
     name = args[0]
     old_phone = args[1]
     new_phone = args[2]
-    book_record = book.find(name)
-    if book_record is None:
-        raise KeyError("Contact not found in the book.")
-    else:
-        message = book_record.edit_phone(old_phone, new_phone)
+    book_record = book.find_by_name(name)
+    is_record_found(book_record)
+    message = book_record.edit_phone(old_phone, new_phone)
     return message
 
 @input_error
 def show_phones(args, book: AddressBook):
     name = args[0]
-    book_record = book.find(name)
-    if book_record is None:
-        raise KeyError("Contact not found in the book.")
-    else:
-        phone_numbers = ', '.join(str(phone) for phone in book_record.phones)
+    book_record = book.find_by_name(name)
+    is_record_found(book_record)
+    phone_numbers = ', '.join(str(phone) for phone in book_record.phones)
     return phone_numbers
 
 
 @input_error
 def add_email(args, book: AddressBook):
     name, email, *_ = args
-    book_record = book.find(name)
-    if book_record is None:
-        raise KeyError("Contact not found in the book.")
-    else:
-        book_record.add_email(email)
-        return "Email added"
+    book_record = book.find_by_name(name)
+    is_record_found(book_record)
+    book_record.add_email(Email(email))
+    return "Email added"
 
 @input_error
 def show_emails(args, book: AddressBook):
     name = args[0]
-    book_record = book.find(name)
-    if book_record is None:
-        raise KeyError("Contact not found in the book.")
-    else:
-        emails = ', '.join(str(email) for email in book_record.emails)
+    book_record = book.find_by_name(name)
+    is_record_found(book_record)
+    emails = ', '.join(str(email) for email in book_record.emails)
     return emails
 
 @input_error
@@ -76,20 +73,16 @@ def show_all(book: AddressBook):
 def add_birthday(args, book: AddressBook):
     name = args[0]
     birthday_str = args[1]
-    book_record = book.find(name)
-    if book_record is None:
-        raise KeyError("Contact not found in the book.")
-    else:
-        message = book_record.add_birthday(birthday_str)
+    book_record = book.find_by_name(name)
+    is_record_found(book_record)
+    message = book_record.add_birthday(birthday_str)
     return message
 
 @input_error
 def show_birthday(args, book: AddressBook):
     name = args[0]
     book_record = book.find(name)
-
-    if book_record is None:
-        raise KeyError("Contact not found in the book.")
+    is_record_found(book_record)
     if book_record.birthday is None:
         raise ValueError("Birthday is not set for this contact yet.")
     
@@ -105,3 +98,28 @@ def birthdays(book: AddressBook):
     for entry in upcoming_birthdays:
         result_message.append(f"{entry['name']} - {entry['congratulation_date']}")
     return '\n'.join(result_message)
+
+@input_error
+def remove_contact(args, book: AddressBook):
+    name = args[0]
+    book_record = book.find_by_name(name)
+    is_record_found(book_record)
+    book.delete_record(name)
+    return "Contact removed."
+
+@input_error
+def find_contact_by_name(args, book: AddressBook):
+    name = args[0]
+    book_record = book.find_by_name(name)
+    is_record_found(book_record)
+    return str(book_record)
+
+@input_error
+def find_contact_by_email(args, book: AddressBook) -> list[Record]:
+    email = args[0]
+    email_obj = Email(email);
+    book_records = book.find_by_email(email_obj)
+    if len(book_records) == 0:
+        raise KeyError("No contacts found with the provided email.")
+    result_messages = [str(record) for record in book_records]
+    return '\n'.join(result_messages)

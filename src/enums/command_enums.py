@@ -12,3 +12,6 @@ class CommandEnum(Enum):
     SHOW_BIRTHDAY = "show-birthday"
     BIRTHDAYS = "birthdays"
     EXIT_COMMANDS = ("exit", "close")
+    REMOVE_CONTACT = "remove"
+    FIND_CONTACT_BY_NAME = "find-by-name"
+    FIND_CONTACT_BY_EMAIL = "find-by-email"

@@ -39,6 +39,12 @@ def main():
                     print(command_processor.show_birthday(args, book))
                 case CommandEnum.BIRTHDAYS.value:
                     print(command_processor.birthdays(book))
+                case CommandEnum.REMOVE_CONTACT.value:
+                    print(command_processor.remove_contact(args, book))
+                case CommandEnum.FIND_CONTACT_BY_NAME.value:
+                    print(command_processor.find_contact_by_name(args, book))
+                case CommandEnum.FIND_CONTACT_BY_EMAIL.value:
+                    print(command_processor.find_contact_by_email(args, book))
                 case _: 
                     print("Invalid command.")
                     input_command = input("Would you like to see all commands list? Y/N >>> ").strip().lower()

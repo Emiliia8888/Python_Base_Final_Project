@@ -30,7 +30,7 @@ class Phone(Field):
         return self.value == value
 
 class Email(Field):
-    def __init__(self, email:str):
+    def __init__(self, email: str):
         self.is_email_valid(email)
         super().__init__(email)
 
@@ -42,6 +42,8 @@ class Email(Field):
         self.is_email_valid(email)
         self.value = email
 
+    def __eq__(self, value):
+        return self.value == value
 
 class Birthday(Field):
     def __init__(self, value):
