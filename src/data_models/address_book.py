@@ -1,6 +1,7 @@
 from collections import UserDict
 from src.data_models.address_book_record import Record
 from datetime import datetime, timedelta
+from src.data_models.record_fields import Email
 
 class AddressBook(UserDict):
     def __init__(self):
@@ -13,14 +14,14 @@ class AddressBook(UserDict):
         self.data[record.name.value] = record
         return f"Record for {record.name} added to address book."
     
-    def delete(self, name):
+    def delete_record(self, name):
         if name in self.data:
             del self.data[name]
             return f"Record for {name} deleted from address book."
         else:
             raise ValueError (f"Record for {name} not found in address book.")
     
-    def find(self, name):
+    def find(self, name) -> Record:
         return self.data.get(name, None)
         
     def __str__(self):
@@ -46,17 +47,16 @@ class AddressBook(UserDict):
                     next_birthday_date = datetime(year=todays_date.year + 1,
                                                   month=record.birthday.value.month,
                                                   day=record.birthday.value.day).date()
-                
-                birthday_weekday = next_birthday_date.weekday()
-                if birthday_weekday >= 5:
-                    days_until_monday = 7 - birthday_weekday
-                    congratulation_date = next_birthday_date + timedelta(days=days_until_monday)
-                else:
-                    congratulation_date = next_birthday_date
-        
-                difference = congratulation_date - todays_date
+
+                difference = next_birthday_date - todays_date
                 if difference.days <= days:
-                    user_congrats = {"name": record.name.value, "congratulation_date": congratulation_date.strftime("%d.%m.%Y")}
+                    user_congrats = {"name": record.name.value, "congratulation_date": next_birthday_date.strftime("%d.%m.%Y")}
                     upcoming_birthdays.append(user_congrats)
         
         return upcoming_birthdays
+
+    def find_by_name(self, name):
+        return self.data.get(name, None)
+
+    def find_by_email(self, email: Email) -> list[Record]:
+       return [record for record in self.data.values() if email in record.emails]

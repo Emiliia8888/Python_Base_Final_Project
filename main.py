@@ -27,6 +27,10 @@ def main():
                     print(command_processor.update_contact(args, book))
                 case CommandEnum.SHOW_PHONE.value:
                     print(command_processor.show_phones(args, book))
+                case CommandEnum.ADD_EMAIL.value:
+                    print(command_processor.add_email(args, book))
+                case CommandEnum.SHOW_EMAIL.value:
+                    print(command_processor.show_emails(args, book))
                 case CommandEnum.SHOW_ALL.value:
                     print(command_processor.show_all(book))
                 case CommandEnum.ADD_BIRTHDAY.value:
@@ -35,6 +39,16 @@ def main():
                     print(command_processor.show_birthday(args, book))
                 case CommandEnum.BIRTHDAYS.value:
                     print(command_processor.birthdays(book))
+                case CommandEnum.REMOVE_CONTACT.value:
+                    print(command_processor.remove_contact(args, book))
+                case CommandEnum.FIND_CONTACT_BY_NAME.value:
+                    print(command_processor.find_contact_by_name(args, book))
+                case CommandEnum.FIND_CONTACT_BY_EMAIL.value:
+                    print(command_processor.find_contact_by_email(args, book))
+                case CommandEnum.ADD_ADDRESS.value:
+                    print(command_processor.add_address(args, book))
+                case CommandEnum.REMOVE_ADDRESS.value:
+                    print(command_processor.remove_address(args, book))
                 case _: 
                     print("Invalid command.")
                     input_command = input("Would you like to see all commands list? Y/N >>> ").strip().lower()

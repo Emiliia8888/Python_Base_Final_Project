@@ -1,7 +1,14 @@
 List of available commands:
 add - adds contact, example of input: add [contact name] [phone]
 change - changes existing contact, example of input: change [contact name] [phone]
+remove - removes contact from the book, example of input: remove [contact name]
+find-by-email - finds and show all information about the contact by email, example of input: find-by-email [email]
+find-by-name - finds and show all information about the contact by name, example of input: find-by-name [contact name]
 phone - returns phone number by name, example of input: phone [contact name]
+add-email - adds email to existing contact, example of input: add-email [contact name] [email]
+email - returns email by name, example of input: email [contact name]
+add-address - adds address to existing contact or update it if address already exists, example of input: add-address [contact name] [address]
+remove-address - removes address from contact, example of input: remove-address [contact name]
 all - shows all added contacts, example of input: all
 hello - says hello, example of input: hello
 add-birthday - adds birthday date to the selected contact in format DD.MM.YYYY, example of input: add-birthday [contact name] [birthday]
