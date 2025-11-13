@@ -9,10 +9,10 @@ def add_note(args, notes: NotesManager):
     note_id = notes.new(title)
     return f"Created note: {note_id}"
 
-#@input_error
-#def edit_note(args, notes: NotesManager):
-    #note_id, *_ = args
-    #return notes.edit_in_editor(int(note_id))
+@input_error
+def edit_note(args, notes: NotesManager):
+    note_id, *_ = args
+    return notes.edit_in_editor(int(note_id))
 
 @input_error
 def delete_note(args, notes: NotesManager):

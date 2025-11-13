@@ -1,4 +1,9 @@
 import datetime
+from prompt_toolkit import Application
+from prompt_toolkit.styles import Style
+from prompt_toolkit.widgets import TextArea, Label
+from prompt_toolkit.key_binding import KeyBindings
+from prompt_toolkit.layout import Layout, HSplit
 from collections import UserDict
 from typing import Set
 
@@ -61,22 +66,32 @@ class NotesManager(UserDict):
         else:
             raise ValueError("Note not found")
 
-    #def edit_in_editor(self, note_id):
-        #note = self.get(note_id)
-        #if not note:
-            #return "Note not found."
+    def edit_in_editor(self, note_id):
+        note = self.get(note_id)
+        if not note:
+            return "Note not found."
 
-        #editor = TuiEditor()
-        #editor.set_text(note.content or "")
-        #print("Press Ctrl-S to exit editor")
-        #editor.edit()
-        #new_content = editor.get_text()
+        text = TextArea(text=note.content or "", multiline=True, scrollbar=True, wrap_lines=False)
+        status_bar = Label("  Ctrl-S: Save   Ctrl-Q: Quit", style="class:status")
+        layout = HSplit([text,status_bar])
+        style = Style.from_dict({"status": "reverse"})
 
-        #if new_content.strip() != note.content.strip():
-            #note.edit(new_content)
-            #return f"Updated note '{note.value}' ({note_id})"
-        #else:
-            #return "No changes made."
+        kb = KeyBindings()
+
+        @kb.add("c-s")
+        def _(event): event.app.exit(result=text.text)
+
+        @kb.add("c-q")
+        def _(event): event.app.exit(result=None)
+
+        app = Application(layout=Layout(layout), key_bindings=kb, full_screen=True, style=style)
+        new_content = app.run()
+
+        if new_content.strip() != note.content.strip():
+            note.edit(new_content)
+            return f"Updated note '{note.value}' ({note_id})"
+        else:
+            return "No changes made."
 
     def __str__(self):
         if not self.notes:

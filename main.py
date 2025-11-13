@@ -43,8 +43,8 @@ def main():
 
                 case CommandEnum.ADD_NOTE.value:
                     print(notes_processor.add_note(args, notes))
-                #case CommandEnum.EDIT_NOTE.value:
-                    #print(notes_processor.edit_note(args, notes))
+                case CommandEnum.EDIT_NOTE.value:
+                    print(notes_processor.edit_note(args, notes))
                 case CommandEnum.DELETE_NOTE.value:
                     print(notes_processor.delete_note(args, notes))
                 case CommandEnum.LIST_NOTES.value:
