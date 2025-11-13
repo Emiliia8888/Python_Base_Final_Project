@@ -14,11 +14,11 @@ from rich.progress import (
 import time
 import src.constants.loading_data_consts as consts
 
-def get_full_filepath(filename: str) -> str:
+def get_full_filepath(filename: str) -> Path:
     user_home = Path.home()
-    if not (user_home / ".assistant").exists():
+    if not (user_home / consts.SAVE_DATA_FOLDER_PATH).exists():
         (user_home / consts.SAVE_DATA_FOLDER_PATH).mkdir(parents=True)
-    filename = f"{user_home}\\{consts.SAVE_DATA_FOLDER_PATH}\\{filename}"
+    filename = user_home / consts.SAVE_DATA_FOLDER_PATH / filename
     return filename
 
 def get_progress_object() -> Progress:

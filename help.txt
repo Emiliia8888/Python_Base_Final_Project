@@ -16,6 +16,8 @@ show-birthday - shows birthday date of the selected contact, example of input: s
 birthdays - shows all contacts that have birthdays during next week, example of input: birthdays
 add-note - adds a note, example of input: add [note title]
 edit-note - edit an existing note, example of input: edit-note [note ID]
-all-notes - shows all note titles by ID, example of input: all-notes
+add-tag - add a tag to a note, example of input: add-tag [note ID] [tag]
+remove-tag - remove a tag from a note, example of input: remove-tag [note ID] [tag]
+find-notes - find notes by tag, example of input: find-notes [tag]
 remove-note - delete a note, example of input: delete-note [note ID]
 close / exit - finish dialog with assistant bot

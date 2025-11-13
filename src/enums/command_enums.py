@@ -15,6 +15,9 @@ class CommandEnum(Enum):
     EDIT_NOTE = "edit-note"
     DELETE_NOTE = "remove-note"
     LIST_NOTES = "all-notes"
+    ADD_TAG = "add-tag"
+    REMOVE_TAG = "remove-tag"
+    SEARCH_NOTES = "find-notes"
     EXIT_COMMANDS = ("exit", "close")
     REMOVE_CONTACT = "remove"
     FIND_CONTACT_BY_NAME = "find-by-name"
