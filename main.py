@@ -1,3 +1,6 @@
+from prompt_toolkit import prompt
+from prompt_toolkit.completion import WordCompleter
+
 import src.command_processing.command_processor as command_processor
 from src.command_processing import notes_processor
 from src.command_processing.command_parser import parse_input_data
@@ -7,8 +10,8 @@ from src.save_load_data.save_load_data import load_all_data, save_all_data
 def main():
     user_name = input("Enter your name >>> ")
     print(f"Welcome {user_name} to the assistant bot!")
-    book, notes = load_all_data()
-    
+    book = load_data()
+
     while True:
         try:
             user_data = input("Enter the command >>> ")
