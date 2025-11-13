@@ -10,11 +10,39 @@ from src.save_load_data.save_load_data import load_all_data, save_all_data
 def main():
     user_name = input("Enter your name >>> ")
     print(f"Welcome {user_name} to the assistant bot!")
-    book = load_data()
+    book, notes = load_all_data()
+
+    # autocomplete for commands (Task 12)
+    base_commands = [
+        CommandEnum.HELLO.value,
+        CommandEnum.ADD.value,
+        CommandEnum.CHANGE.value,
+        CommandEnum.SHOW_PHONE.value,
+        CommandEnum.ADD_EMAIL.value,
+        CommandEnum.SHOW_EMAIL.value,
+        CommandEnum.SHOW_ALL.value,
+        CommandEnum.ADD_BIRTHDAY.value,
+        CommandEnum.SHOW_BIRTHDAY.value,
+        CommandEnum.BIRTHDAYS.value,
+        CommandEnum.ADD_NOTE.value,
+        CommandEnum.DELETE_NOTE.value,
+        CommandEnum.LIST_NOTES.value,
+        CommandEnum.REMOVE_CONTACT.value,
+        CommandEnum.FIND_CONTACT_BY_NAME.value,
+        CommandEnum.FIND_CONTACT_BY_EMAIL.value,
+        CommandEnum.ADD_ADDRESS.value,
+        CommandEnum.REMOVE_ADDRESS.value,
+    ]
+
+    exit_commands = list(CommandEnum.EXIT_COMMANDS.value)
+    all_commands = base_commands + exit_commands
+
+    command_completer = WordCompleter(all_commands, ignore_case=True)
+
 
     while True:
         try:
-            user_data = input("Enter the command >>> ")
+            user_data = prompt("Enter the command >>> ", completer=command_completer)
             command, *args = parse_input_data(user_data) 
             
             if command in CommandEnum.EXIT_COMMANDS.value:
