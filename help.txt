@@ -5,8 +5,10 @@ remove - removes contact from the book, example of input: remove [contact name]
 find-by-email - finds and show all information about the contact by email, example of input: find-by-email [email]
 find-by-name - finds and show all information about the contact by name, example of input: find-by-name [contact name]
 phone - returns phone number by name, example of input: phone [contact name]
+remove_phone - removes a phone from the record, example of input: remove_phone [contact name] [phone]
 add-email - adds email to existing contact, example of input: add-email [contact name] [email]
 email - returns email by name, example of input: email [contact name]
+remove_email - removes an email from the record, example of input: remove_email [contact name] [email]
 add-address - adds address to existing contact or update it if address already exists, example of input: add-address [contact name] [address]
 remove-address - removes address from contact, example of input: remove-address [contact name]
 all - shows all added contacts, example of input: all
@@ -17,5 +19,8 @@ birthdays - shows all contacts that have birthdays during next week, example of 
 add-note - adds a note, example of input: add [note title]
 edit-note - edit an existing note, example of input: edit-note [note ID]
 all-notes - shows all note titles by ID, example of input: all-notes
+add-tag - add a tag to a note, example of input: add-tag [note ID] [tag]
+remove-tag - remove a tag from a note, example of input: remove-tag [note ID] [tag]
+find-notes - find notes by tag, example of input: find-notes [tag]
 remove-note - delete a note, example of input: delete-note [note ID]
 close / exit - finish dialog with assistant bot

@@ -1,3 +1,6 @@
+from prompt_toolkit import prompt
+from prompt_toolkit.completion import WordCompleter
+
 import src.command_processing.command_processor as command_processor
 from src.command_processing import notes_processor
 from src.command_processing.command_parser import parse_input_data
@@ -8,18 +11,18 @@ def main():
     user_name = input("Enter your name >>> ")
     print(f"Welcome {user_name} to the assistant bot!")
     book, notes = load_all_data()
-
-    # Show help right after loading data
     print(command_processor.show_help_file())
+    
+    base_commands = [command.value for command in CommandEnum]
+    exit_commands = list(CommandEnum.EXIT_COMMANDS.value)
+    all_commands = base_commands + exit_commands
+    command_completer = WordCompleter(all_commands, ignore_case=True)
 
     while True:
         try:
             user_data = input("Enter the command >>> ")
             command, *args = parse_input_data(user_data)
-            print(f"[DEBUG] Parsed command: '{command}'")
 
-
-            # If user types 'help' — show help.txt and skip rest of the loop
             if command.lower() == CommandEnum.HELP.value:
                 print(command_processor.show_help_file())
                 continue
@@ -38,10 +41,14 @@ def main():
                     print(command_processor.update_contact(args, book))
                 case CommandEnum.SHOW_PHONE.value:
                     print(command_processor.show_phones(args, book))
+                case CommandEnum.REMOVE_PHONE.value:
+                    print(command_processor.remove_phone(args, book))
                 case CommandEnum.ADD_EMAIL.value:
                     print(command_processor.add_email(args, book))
                 case CommandEnum.SHOW_EMAIL.value:
                     print(command_processor.show_emails(args, book))
+                case CommandEnum.REMOVE_EMAIL.value:
+                    print(command_processor.remove_email(args, book))
                 case CommandEnum.SHOW_ALL.value:
                     print(command_processor.show_all(book))
                 case CommandEnum.ADD_BIRTHDAY.value:
@@ -50,14 +57,23 @@ def main():
                     print(command_processor.show_birthday(args, book))
                 case CommandEnum.BIRTHDAYS.value:
                     print(command_processor.birthdays(book))
+
                 case CommandEnum.ADD_NOTE.value:
                     print(notes_processor.add_note(args, notes))
-                # case CommandEnum.EDIT_NOTE.value:
-                #     print(notes_processor.edit_note(args, notes))
+                case CommandEnum.EDIT_NOTE.value:
+                    print(notes_processor.edit_note(args, notes))
                 case CommandEnum.DELETE_NOTE.value:
                     print(notes_processor.delete_note(args, notes))
                 case CommandEnum.LIST_NOTES.value:
                     print(notes_processor.list_notes(notes))
+
+                case CommandEnum.ADD_TAG.value:
+                    print(notes_processor.add_tag(args,notes))
+                case CommandEnum.REMOVE_TAG.value:
+                    print(notes_processor.remove_tag(args,notes))
+                case CommandEnum.SEARCH_NOTES.value:
+                    print(notes_processor.search_notes(args, notes))
+
                 case CommandEnum.REMOVE_CONTACT.value:
                     print(command_processor.remove_contact(args, book))
                 case CommandEnum.FIND_CONTACT_BY_NAME.value:

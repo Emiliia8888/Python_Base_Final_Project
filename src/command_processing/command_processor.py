@@ -1,3 +1,4 @@
+from src.data_models.record_fields import Phone
 from src.error_handling.error_handler import input_error
 from src.data_models.address_book import AddressBook
 from src.data_models.address_book_record import Record, Email
@@ -18,9 +19,8 @@ def show_help_file():
 
 @input_error
 def add_contact(args, book: AddressBook):
-    name = args[0]
-    phone = args[1]
-    book_record = book.find(name)
+    name, phone, *_ = args
+    book_record = book.find_by_name(name)
     message = "Contact updated."
     if book_record is None:
         book_record = Record(name)
@@ -32,9 +32,7 @@ def add_contact(args, book: AddressBook):
 
 @input_error
 def update_contact(args, book: AddressBook):
-    name = args[0]
-    old_phone = args[1]
-    new_phone = args[2]
+    name, old_phone, new_phone, *_ = args
     book_record = book.find_by_name(name)
     is_record_found(book_record)
     message = book_record.edit_phone(old_phone, new_phone)
@@ -48,6 +46,12 @@ def show_phones(args, book: AddressBook):
     phone_numbers = ', '.join(str(phone) for phone in book_record.phones)
     return phone_numbers
 
+@input_error
+def remove_phone(args, book):
+    name, phone, *_ = args
+    book_record = book.find_by_name(name)
+    is_record_found(book_record)
+    return book_record.remove_phone(Phone(phone))
 
 @input_error
 def add_email(args, book: AddressBook):
@@ -66,8 +70,15 @@ def show_emails(args, book: AddressBook):
     return emails
 
 @input_error
+def remove_email(args, book: AddressBook):
+    name, email, *_ = args
+    book_record = book.find_by_name(name)
+    is_record_found(book_record)
+    return book_record.remove_email(Email(email))
+
+@input_error
 def show_all(book: AddressBook):
-    return str(book);
+    return str(book)
 
 @input_error
 def add_birthday(args, book: AddressBook):
@@ -81,7 +92,7 @@ def add_birthday(args, book: AddressBook):
 @input_error
 def show_birthday(args, book: AddressBook):
     name = args[0]
-    book_record = book.find(name)
+    book_record = book.find_by_name(name)
     is_record_found(book_record)
     if book_record.birthday is None:
         raise ValueError("Birthday is not set for this contact yet.")
@@ -115,9 +126,9 @@ def find_contact_by_name(args, book: AddressBook):
     return str(book_record)
 
 @input_error
-def find_contact_by_email(args, book: AddressBook) -> list[Record]:
+def find_contact_by_email(args, book: AddressBook) -> str:
     email = args[0]
-    email_obj = Email(email);
+    email_obj = Email(email)
     book_records = book.find_by_email(email_obj)
     if len(book_records) == 0:
         raise KeyError("No contacts found with the provided email.")

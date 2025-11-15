@@ -5,6 +5,7 @@ from src.data_models.record_fields import Email
 
 class AddressBook(UserDict):
     def __init__(self):
+        super().__init__()
         self.data = {}
     
     def add_record(self, record):
@@ -21,9 +22,6 @@ class AddressBook(UserDict):
         else:
             raise ValueError (f"Record for {name} not found in address book.")
     
-    def find(self, name) -> Record:
-        return self.data.get(name, None)
-        
     def __str__(self):
         if not self.data:
             raise ValueError("Address book is empty")
@@ -55,7 +53,7 @@ class AddressBook(UserDict):
         
         return upcoming_birthdays
 
-    def find_by_name(self, name):
+    def find_by_name(self, name) -> Record:
         return self.data.get(name, None)
 
     def find_by_email(self, email: Email) -> list[Record]:

@@ -33,13 +33,12 @@ class Record:
         
         raise ValueError(f"Phone {phone_number} not found for {self.name}")
     
-    def remove_phone(self, phone_number):
-        for phone in self.phones:
-            if phone.value == phone_number:
-                self.phones.remove(phone)
-                return f"Phone {phone_number} removed from {self.name}"
-        
-        raise ValueError(f"Phone {phone_number} not found for {self.name}")
+    def remove_phone(self, phone: Phone):
+        if not phone in self.phones:
+            raise ValueError(f"Phone {phone} not found for {self.name}")
+        self.phones.remove(phone)
+        return f"Phone {phone} removed from {self.name}"
+
     def add_birthday(self, birthday_str):
         self.birthday = Birthday(birthday_str)
         return f"Birthday {birthday_str} added to {self.name}"
@@ -47,7 +46,13 @@ class Record:
     def add_email(self, email: Email):
         if email in self.emails:
             raise ValueError(f"Email {email} already exists for {self.name}")
-        self.emails.append(Email(email))
+        self.emails.append(email)
+
+    def remove_email(self, email: Email):
+        if not email in self.emails:
+            raise ValueError(f"Email {email} is not set for this contact.")
+        self.emails.remove(email)
+        return "Email removed."
 
     def add_address(self, address: str):
         if not address:
